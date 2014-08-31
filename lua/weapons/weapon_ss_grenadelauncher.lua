@@ -65,11 +65,11 @@ function SWEP:Release()
 	if CLIENT or game.SinglePlayer() then
 		timer.Simple(0.01,function()
 			if (!IsValid(self) or !IsValid(self.Owner) or !self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() != self) then return end
-			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand((-1,1)*0.5,0)*2 )
+			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand(-1,1)*0.5,0)*2 )
 		end)
 	end
 	
-	self.Owner:ViewPunch(Angle(Kick,Kick*math.Rand((-1,1)*0.5,0))
+	self.Owner:ViewPunch(Angle(Kick,Kick*math.Rand(-1,1)*0.5,0))
 	
 	--print(Kick)
 	
