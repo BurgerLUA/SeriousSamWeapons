@@ -71,16 +71,12 @@ function SWEP:PrimaryAttack()
 		end	
 		
 		local ent = ents.Create("ss_laser")
-		ent:SetAngles(ang)
+		ent:SetAngles(ang + Angle(math.Rand(-0.5,0.5),math.Rand(-0.5,0.5),math.Rand(-0.5,0.5)))
 		ent:SetPos(pos +ang:Forward() *-48)
 		ent:SetOwner(self.Owner)
 		ent:SetDamage(self.Primary.Damage)
 		ent:Spawn()
 		ent:Activate()
-		local phys = ent:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:SetVelocity(ang:Up() *2 +ang:Forward() *4096 +ang:Right() *-2)
-		end
 	end
 	self:HolsterDelay()
 	self:IdleStuff()

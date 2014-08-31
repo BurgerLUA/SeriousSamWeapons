@@ -19,7 +19,6 @@ function SWEP:Deploy()
 end
 
 function SWEP:PrimaryAttack()
-	if !self:CanPrimaryAttack() then return end	
 	self:SetNextPrimaryFire(CurTime() +3)
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK_1)
 	self.bInAttack = true
@@ -36,17 +35,27 @@ function SWEP:SpecialThink()
 	end
 	if !self.bInAttack || self.Owner:KeyDown(IN_ATTACK) || CurTime() < self.attackStart then return end
 	self:Release()
+	
 end	
 
 function SWEP:Release()
 	self:SetNextPrimaryFire(CurTime() +self.Primary.Delay)
-	timer.Simple(self.Primary.Delay, function() self:EmitSound("hl1/fvox/blip.wav",100,100) end)
+	--timer.Simple(self.Primary.Delay, function() self:EmitSound("hl1/fvox/blip.wav",100,100) end)
 	self.bInAttack = nil
 	self.rdelay = nil
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	
+	if self.Weapon:Clip1() - 1 < 0 then return end
+	
+	timer.Simple(10,function() 
+		if (!IsValid(self) or !IsValid(self.Owner)) then return end
+		self.Weapon:SetClip1(math.Clamp(self.Weapon:Clip1()+1,1,3)) 
+	end)
+	
+	
+	self:TakePrimaryAmmo(1)
 	self:WeaponSound(self.Primary.Sound)
-	self:TakeAmmo(1)
 	self:IdleStuff()
 	self:HolsterDelay()
 	if CLIENT then return end
@@ -67,8 +76,8 @@ function SWEP:Release()
 	ent:Activate()
 	local phys = ent:GetPhysicsObject()
 	if IsValid(phys) then
-		local mod = CurTime() - self.attackStart
-		local vel = self.Owner:GetForward()*mod*10000
+		local mod = (CurTime() - self.attackStart + 0.1)
+		local vel = self.Owner:GetForward()*mod*1000
 		phys:SetVelocity(vel)
 	end
 end
@@ -81,6 +90,7 @@ function SWEP:OnRemove()
 	return true
 end
 
+
 function SWEP:Holster()
 	if self.DisableHolster or self.bInAttack then
 		return false
@@ -88,6 +98,7 @@ function SWEP:Holster()
 	self:OnRemove()
 	return true
 end
+
 
 SWEP.HoldType			= "shotgun"
 SWEP.Base				= "weapon_ss_base"
@@ -99,8 +110,9 @@ SWEP.WorldModel			= "models/weapons/serioussam/w_cannon.mdl"
 
 SWEP.Primary.Sound			= Sound("weapons/serioussam/cannon/Fire.wav")
 SWEP.Primary.Damage			= 100
-SWEP.Primary.Delay			= 5
-SWEP.Primary.DefaultClip	= 5
-SWEP.Primary.Ammo			= "Cannonball"
-
+SWEP.Primary.Delay			= 1.25
+SWEP.Primary.DefaultClip	= 3
+SWEP.Primary.ClipSize	= 3
+SWEP.Primary.Ammo			= "none"
+SWEP.NextLoad = 0
 SWEP.EnableIdle				= false

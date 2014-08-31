@@ -109,7 +109,7 @@ function SWEP:Think()
 	if CLIENT and self.EnableIdle then return end
 	if self.idledelay and CurTime() > self.idledelay then
 		self.idledelay = nil
-		self.fidgetdelay = CurTime() +self:SequenceDuration() +math.random(10,12)
+		self.fidgetdelay = CurTime() +self:SequenceDuration() +math.Rand(10,12)
 		self:SendWeaponAnim(ACT_VM_IDLE)
 	end
 	
@@ -283,7 +283,7 @@ hook.Add("PlayerHurt", "samplayerhurt", function(ply, at, h, dmg)
 		end
 
 		if ply.SoundDelay and ply.SoundDelay <= CurTime() then
-			local pitch = math.random(92,112)
+			local pitch = math.Rand(92,112)
 			if ply:WaterLevel() == 3 then
 				ply:EmitSound("player/serioussam/WoundWater.wav", 80, pitch)
 			elseif dmg > 30 then

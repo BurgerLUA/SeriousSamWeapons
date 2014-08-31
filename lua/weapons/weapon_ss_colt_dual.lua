@@ -61,7 +61,7 @@ function SWEP:Think()
 	if CLIENT then return end
 	if self.idledelay and CurTime() > self.idledelay then
 		self.idledelay = nil
-		self.fidgetdelay = CurTime() +self:SequenceDuration() +math.random(10,12)
+		self.fidgetdelay = CurTime() +self:SequenceDuration() +math.Rand(10,12)
 		self:SendWeaponAnimation(self:GetIdleActivity(), 0, 1.0)
 		self:SendWeaponAnimation(self:GetIdleActivity(), 1, 1.0)
 	end

@@ -32,6 +32,7 @@ function ENT:Initialize()
 		phys:EnableDrag(false)
 		phys:EnableGravity(false)
 		phys:SetBuoyancyRatio(0)
+		phys:SetVelocity(self:GetForward()*4000)
 	end
 end
 

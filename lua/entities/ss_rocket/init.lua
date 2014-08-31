@@ -86,7 +86,8 @@ function ENT:Think()
 		if self.Fuel > 0 then 
 			self.Fuel = self.Fuel - 1
 			phys:ApplyForceCenter(self:GetAngles():Forward() * 50 * self.Fuel * phys:GetMass())
-			phys:AddAngleVelocity(Vector(math.random(-10,10),math.random(-10,10),math.random(-10,10)))
+			phys:AddAngleVelocity(Vector(math.Rand(-5,5),math.Rand(-5,5),math.Rand(-5,5)))
+			
 		else
 			phys:EnableGravity(true)
 			phys:EnableDrag(true)

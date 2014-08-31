@@ -3,18 +3,18 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:Initialize()
-	self:SetModel("models/props_phx/misc/smallcannonball.mdl")
+	self:SetModel("models/projectiles/serioussam/cannonball.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
-	--self:SetMoveType(MOVETYPE_VPHYSICS)
-	--self:SetSolid(SOLID_VPHYSICS)
-	--self:SetCustomCollisionCheck( true )
-	--self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
+	self:SetCustomCollisionCheck( true )
+	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 
 	local phys = self:GetPhysicsObject()
 
 	if phys and phys:IsValid() then
 		phys:Wake()
-		phys:SetMass(1)
+		phys:SetMass(1000)
 		phys:EnableDrag(true)
 		phys:EnableGravity(true)
 		phys:AddGameFlag(FVPHYSICS_NO_IMPACT_DMG)
@@ -22,6 +22,9 @@ function ENT:Initialize()
 		--phys:AddGameFlag(FVPHYSICS_DMG_DISSOLVE)
 		--phys:AddGameFlag(FVPHYSICS_NO_SELF_COLLISIONS)
 	end
+	
+	timer.Simple(10,function() phys:EnableDrag(true) end)
+	
 end
 
 

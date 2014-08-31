@@ -29,6 +29,7 @@ function SWEP:SecondaryAttack()
 
 		
 	timer.Create( "nadedroptimer" .. self.Owner:EntIndex(), 0.20, 3, function()	
+		if (!IsValid(self) or !IsValid(self.Owner) or !self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() != self) then return end
 		self.attackStart = CurTime() - 0.05
 		self.rdelay = CurTime() +.85
 		self:Release()
@@ -64,11 +65,11 @@ function SWEP:Release()
 	if CLIENT or game.SinglePlayer() then
 		timer.Simple(0.01,function()
 			if (!IsValid(self) or !IsValid(self.Owner) or !self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() != self) then return end
-			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand(-1,1)*0.5,0)*2 )
+			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand((-1,1)*0.5,0)*2 )
 		end)
 	end
 	
-	self.Owner:ViewPunch(Angle(Kick,Kick*math.Rand(-1,1)*0.5,0))
+	self.Owner:ViewPunch(Angle(Kick,Kick*math.Rand((-1,1)*0.5,0))
 	
 	--print(Kick)
 	
@@ -86,7 +87,7 @@ function SWEP:Release()
 	pos = pos +ang:Forward() *0 +ang:Right() *3 +ang:Up() *-18
 	local ent = ents.Create("ss_grenade")
 	ent:SetPos(pos)
-	ent:SetAngles(ang + Angle(math.random(-10,10),math.random(-10,10),math.random(-10,10)))
+	ent:SetAngles(ang + Angle(math.Rand(-10,10),math.Rand(-10,10),math.Rand(-10,10)))
 	ent:SetOwner(self.Owner)
 	ent:SetExplodeDelay(2.5)
 	ent:SetDamage(damage)
