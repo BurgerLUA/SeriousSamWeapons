@@ -30,7 +30,7 @@ end
 function SWEP:SecondaryAttack()
 
 
-
+	if !self:CanPrimaryAttack() then return end
 	if !self:CanSecondaryAttack() then return end
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay*6)
 	self:SetNextSecondaryFire(CurTime() + self.Primary.Delay*6)

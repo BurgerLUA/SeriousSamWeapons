@@ -3,7 +3,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:Initialize()
-	self:SetModel("models/projectiles/serioussam/cannonball.mdl")
+	self:SetModel("models/props_phx/cannonball_solid.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
@@ -41,11 +41,7 @@ function ENT:PhysicsCollide(data,phys)
 	if data.Speed > 50 then
 		self:EmitSound("weapons/serioussam/cannon/Bounce.wav",100,100)
 	else
-		timer.Simple(10,function() 
-			if self:IsValid() then 
-				self:Remove()
-			end
-		end)
+		SafeRemoveEntityDelayed( self, 5 )
 	end
 		
 	local impulse = (-data.Speed * data.HitNormal) * 0.5

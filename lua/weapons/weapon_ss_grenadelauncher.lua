@@ -22,6 +22,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+	if !self:CanPrimaryAttack() then return end	
 	if !self:CanSecondaryAttack() then return end	
 		self:SetNextPrimaryFire(CurTime() + 5)
 		self:SetNextSecondaryFire(CurTime() + 5)

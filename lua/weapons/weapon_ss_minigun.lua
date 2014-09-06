@@ -124,7 +124,7 @@ SWEP.ViewModel			= "models/weapons/serioussam/v_minigun.mdl"
 SWEP.WorldModel			= "models/weapons/serioussam/w_minigun.mdl"
 
 SWEP.Primary.Sound			= Sound("weapons/serioussam/minigun/Fire.wav")
-SWEP.Primary.Damage			= 3
+SWEP.Primary.Damage			= 2.5
 SWEP.Primary.NumShots		= 2
 SWEP.Primary.Cone			= .03
 SWEP.Primary.Delay			= .05
