@@ -4,11 +4,11 @@ include("shared.lua")
 
 function ENT:Initialize()
 	self:SetModel("models/props_phx/cannonball_solid.mdl")
-	self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	self:SetCustomCollisionCheck( true )
-	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+	
+	self:PhysicsInit( SOLID_VPHYSICS )      -- Make us work with physics,
+	self:SetMoveType( MOVETYPE_VPHYSICS )   -- after all, gmod is a physics
+	self:SetSolid( SOLID_VPHYSICS )         -- Toolbox
+ 
 
 	local phys = self:GetPhysicsObject()
 
