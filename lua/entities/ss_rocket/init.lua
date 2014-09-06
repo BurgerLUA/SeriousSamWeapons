@@ -46,7 +46,7 @@ end
 function ENT:PhysicsCollide(data, physobj)
 	local start = data.HitPos + data.HitNormal
     local endpos = data.HitPos - data.HitNormal
-	util.Decal("Scorch",start,endpos)
+	--util.Decal("Scorch",start,endpos)
 	
 	local effectdata = EffectData()
 	effectdata:SetAngles(data.HitNormal:Angle())
