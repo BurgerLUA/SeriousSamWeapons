@@ -6,7 +6,7 @@ if CLIENT then
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1
 	SWEP.WepIcon			= "icons/serioussam/Colt"
-	killicon.Add("weapon_ss_colt", SWEP.WepIcon, Color(255, 255, 255, 255))
+	killicon.AddFont( "weapon_cs_p228", "csd", "y", Color(255, 100, 100, 100) )
 	SWEP.ViewModelFlip = true
 
 end

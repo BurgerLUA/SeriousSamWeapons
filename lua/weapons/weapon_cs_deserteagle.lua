@@ -6,11 +6,12 @@ if CLIENT then
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1
 	SWEP.WepIcon			= "icons/serioussam/Colt"
-	killicon.Add("weapon_ss_colt", SWEP.WepIcon, Color(255, 255, 255, 255))
-
+	killicon.AddFont( "weapon_cs_deserteagle", "csd", "f", Color(255, 100, 100, 100) )
+	SWEP.ViewModelFlip = true
+	
 end
 
-SWEP.ViewModelFlip = true
+
 
 function SWEP:PrimaryAttack()
 	if !self:CanPrimaryAttack() then return end

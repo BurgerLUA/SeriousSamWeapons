@@ -1,12 +1,12 @@
 
 if CLIENT then
 
-	SWEP.PrintName			= "(WIP) CSS G3"
+	SWEP.PrintName			= "CSS G3"
 	SWEP.Author				= "Upset"
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1
 	SWEP.WepIcon			= "icons/serioussam/Colt"
-	killicon.Add("weapon_ss_colt", SWEP.WepIcon, Color(255, 255, 255, 255))
+	killicon.AddFont( "weapon_cs_g3", "csd", "i", Color(255, 100, 100, 100) )
 	SWEP.ViewModelFlip = true
 
 end

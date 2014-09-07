@@ -6,8 +6,10 @@ if CLIENT then
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1
 	SWEP.WepIcon			= "icons/serioussam/Colt"
-	killicon.Add("weapon_ss_colt", SWEP.WepIcon, Color(255, 255, 255, 255))
+	killicon.AddFont( "weapon_cs_ak47", "csd", "b", Color(255, 100, 100, 100) )
 	SWEP.ViewModelFlip = true
+	
+	
 
 end
 
@@ -64,13 +66,13 @@ SWEP.Spawnable			= true
 SWEP.ViewModel			= "models/weapons/v_rif_ak47.mdl"
 SWEP.WorldModel			= "models/weapons/w_rif_ak47.mdl"
 
-SWEP.Primary.Damage			= 31
+SWEP.Primary.Damage			= 35
 SWEP.Primary.Sound			= Sound("weapons/ak47/ak47-1.wav")
 SWEP.Primary.Cone			= .01
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.ClipSize		= 100
-SWEP.Primary.DefaultClip	= 200
-SWEP.Primary.Delay			= .1
+SWEP.Primary.ClipSize		= 30
+SWEP.Primary.DefaultClip	= 90
+SWEP.Primary.Delay			= .14
 SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
 

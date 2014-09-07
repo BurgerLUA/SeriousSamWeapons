@@ -6,7 +6,7 @@ if CLIENT then
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1
 	SWEP.WepIcon			= "icons/serioussam/Colt"
-	killicon.Add("weapon_ss_colt", SWEP.WepIcon, Color(255, 255, 255, 255))
+	killicon.AddFont( "weapon_cs_xm1014", "csd", "B", Color(255, 100, 100, 100) )
 	SWEP.ViewModelFlip = true
 
 end
@@ -81,7 +81,7 @@ SWEP.Base				= "weapon_ss_base"
 SWEP.Category			= "Counter-Strike Source Weapons"
 SWEP.Spawnable			= true
 
-SWEP.ViewModel			= "models/weapons/c_shotgun.mdl"
+SWEP.ViewModel			= "models/weapons/v_shot_xm1014.mdl"
 SWEP.WorldModel			= "models/weapons/w_shot_xm1014.mdl"
 
 SWEP.Primary.Damage			= 114/12
