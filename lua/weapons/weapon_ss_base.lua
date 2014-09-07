@@ -85,7 +85,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:WeaponSound(snd)
-	if SERVER then self.Owner:EmitSound(snd, 100, 100) end
+	if SERVER then self.Owner:EmitSound(snd, 50, 100) end
 end
 
 function SWEP:HolsterDelay()
