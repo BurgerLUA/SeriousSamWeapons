@@ -56,7 +56,7 @@ function SWEP:CanPrimaryAttack()
 	return true
 end
 
-SWEP.HoldType			= "pistol"
+SWEP.HoldType			= "shotgun"
 SWEP.Base				= "weapon_ss_base"
 SWEP.Category			= "Counter-Strike Source Weapons"
 SWEP.Spawnable			= true
