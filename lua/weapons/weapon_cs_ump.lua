@@ -1,7 +1,7 @@
 
 if CLIENT then
 
-	SWEP.PrintName			= "CSS TMP"
+	SWEP.PrintName			= "CSS UMP"
 	SWEP.Author				= "Upset"
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1

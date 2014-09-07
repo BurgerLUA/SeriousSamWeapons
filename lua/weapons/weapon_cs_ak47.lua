@@ -61,8 +61,8 @@ SWEP.Base				= "weapon_ss_base"
 SWEP.Category			= "Counter-Strike Source Weapons"
 SWEP.Spawnable			= true
 
-SWEP.ViewModel			= "models/weapons/v_ak47.mdl"
-SWEP.WorldModel			= "models/weapons/w_ak47.mdl"
+SWEP.ViewModel			= "models/weapons/v_rif_ak47.mdl"
+SWEP.WorldModel			= "models/weapons/w_rif_ak47.mdl"
 
 SWEP.Primary.Damage			= 31
 SWEP.Primary.Sound			= Sound("weapons/ak47/ak47-1.wav")
