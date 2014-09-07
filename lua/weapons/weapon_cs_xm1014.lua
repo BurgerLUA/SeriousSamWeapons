@@ -81,7 +81,7 @@ SWEP.Base				= "weapon_ss_base"
 SWEP.Category			= "Counter-Strike Source Weapons"
 SWEP.Spawnable			= true
 
-SWEP.ViewModel			= "models/weapons/v_shot_xm1014.mdl"
+SWEP.ViewModel			= "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel			= "models/weapons/w_shot_xm1014.mdl"
 
 SWEP.Primary.Damage			= 114/12

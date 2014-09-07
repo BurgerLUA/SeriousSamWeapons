@@ -30,7 +30,7 @@ SWEP.Purpose				= ""
 SWEP.Instructions			= ""
 SWEP.Category				= "Serious Sam"
 SWEP.Spawnable				= false
---SWEP.UseHands			= true
+SWEP.UseHands			= true
 
 SWEP.Primary.Damage			= 10
 SWEP.Primary.NumShots		= 1
