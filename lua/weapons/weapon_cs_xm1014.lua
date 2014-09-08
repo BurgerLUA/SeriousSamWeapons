@@ -86,12 +86,12 @@ SWEP.WorldModel			= "models/weapons/w_shot_xm1014.mdl"
 
 SWEP.Primary.Damage			= 105/12
 SWEP.Primary.Sound			= Sound("weapons/xm1014/xm1014-1.wav")
-SWEP.Primary.Cone			= .13
+SWEP.Primary.Cone			= .3
 SWEP.Primary.NumShots		= 12
 SWEP.Primary.ClipSize		= 7
 SWEP.Primary.DefaultClip	= 30
-SWEP.Primary.Delay			= 0.4
+SWEP.Primary.Delay			= 0.5
 --SWEP.Primary.Ammo			= "smg1"
-SWEP.Primary.RecoilMul	= 1
+SWEP.Primary.RecoilMul	= 1.25
 
 SWEP.ReloadSound			= ""
