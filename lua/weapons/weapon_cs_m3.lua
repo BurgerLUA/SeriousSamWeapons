@@ -84,14 +84,14 @@ SWEP.Spawnable			= true
 SWEP.ViewModel			= "models/weapons/v_shot_m3super90.mdl"
 SWEP.WorldModel			= "models/weapons/w_shot_m3super90.mdl"
 
-SWEP.Primary.Damage			= 105/12
+SWEP.Primary.Damage			= 114/12
 SWEP.Primary.Sound			= Sound("weapons/m3/m3-1.wav")
 SWEP.Primary.Cone			= .05
 SWEP.Primary.NumShots		= 12
 SWEP.Primary.ClipSize		= 8
 SWEP.Primary.DefaultClip	= 8
 SWEP.Primary.Delay			= 1
-SWEP.Primary.Ammo			= "smg1"
+--SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
 
 SWEP.ReloadSound			= ""

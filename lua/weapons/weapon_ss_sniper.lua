@@ -85,6 +85,8 @@ function SWEP:PrimaryAttack()
 	local cone = self.Primary.Cone
 	if self:GetNetworkedBool("zoom") then
 		cone = 0.001
+	else
+		cone = 0.1
 	end
 	
 	self:ShootBullet(self.Primary.Damage, self.Primary.NumShots,cone)

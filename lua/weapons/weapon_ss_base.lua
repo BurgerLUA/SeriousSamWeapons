@@ -17,6 +17,26 @@ if CLIENT then
 	SWEP.SwayScale			= .1
 	CreateClientConVar("ss_crosshair", 1)
 	CreateClientConVar("ss_firelight", 1)
+	
+	surface.CreateFont( "DebugFont", {
+	font = "Arial",
+	size = 13,
+	weight = 500,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = false,
+	} )
+	
+	
+	
 
 end
 
@@ -39,7 +59,7 @@ SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
 SWEP.Primary.Automatic		= true
 SWEP.Primary.RecoilMul	= 1
-SWEP.Primary.Ammo			= "none"
+--SWEP.Primary.Ammo			= "none"
 SWEP.Secondary.Ammo			= "none"
 
 
@@ -96,11 +116,41 @@ function SWEP:Holster()
 	if self.DisableHolster then
 		return false
 	end
+	
+	self:SetNWBool("zoomed",false)
+	
 	return true
 end
 
 function SWEP:Think()
 	self:SpecialThink()
+	
+	if not self.CoolDown then
+		self.CoolDown = 0
+	end
+	
+	if not self.CoolTime then
+		self.CoolTime = 0
+	end
+	
+	
+	local checker = string.Explode("_", self:GetClass())
+	
+	if checker[2] == "cs" then
+		if self.CoolTime < CurTime() then
+			if self.CoolDown > 0.03 then
+				self.CoolDown = self.CoolDown - 0.06
+			else
+				self.CoolDown = 0
+			end
+		end
+	end
+	
+	
+	
+	self:SetNWInt("weaponheat", math.Clamp(self.CoolDown,0,10))
+		
+	
 	
 	if self.DisableHolster and CurTime() > self.DisableHolster then
 		self.DisableHolster = nil
@@ -126,29 +176,52 @@ end
 
 function SWEP:ShootBullet(dmg, numbul, cone)
 
+	if not self.CoolDown then
+		self.CoolDown = 0
+	end
+
+	local checker = string.Explode("_", self:GetClass())
+	
+	if checker[2] == "cs" then
+		self.CoolDown = math.Clamp(self.CoolDown+(dmg*numbul*0.01),0,10)
+		self.CoolTime = CurTime() + 0.25
+		
+		if self.Owner:Crouching() == true and self.Owner:IsOnGround() == true then
+			crouchmul = 0.5
+		else
+			crouchmul = 1
+		end
+		
+		
+		self.extraspread = (self.CoolDown/100 + self.Owner:GetVelocity():Length()*0.0001)*crouchmul
+	else
+		self.extraspread = 0
+	end
 
 	local Kick = -(dmg*numbul/20)/2*self.Primary.RecoilMul
 
 	if CLIENT or game.SinglePlayer() then
-		timer.Simple(0.01,function()
+		timer.Simple(0.00,function()
 			if (!IsValid(self) or !IsValid(self.Owner) or !self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() != self) then return end
-			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand(-1,1)*0.5,0)*2 )
+			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand(-1,1)*0.5,0)*1 )
 		end)
 	end
 	
-	self.Owner:ViewPunch(Angle(Kick,Kick*math.Rand(-1,1)*0.5,0))
+	self.Owner:ViewPunch(Angle(Kick*0.25,Kick*math.Rand(-1,1)*0.25,0))
+	
+	
 	
 	local bullet = {}
 	bullet.Num 		= numbul
 	bullet.Src 		= self.Owner:GetShootPos() 
 	bullet.Dir 		= self.Owner:GetAimVector()
-	bullet.Spread 	= Vector(cone, cone, 0)
+	bullet.Spread 	= Vector(cone, cone, 0) + Vector(self.extraspread,self.extraspread,0)
 	bullet.Tracer	= 3
 	bullet.Force	= dmg/10
 	bullet.Damage	= dmg
 	self.Owner:FireBullets(bullet)
 
-
+	
 	
 
 	
@@ -365,15 +438,44 @@ function SWEP:Crosshair()
 		local coords = trace.HitPos:ToScreen()
 		x, y = coords.x, coords.y
 	else
-		x, y = ScrW() / 2, ScrH() / 2
+		x, y = ScrW() / 2 , ScrH() / 2
 	end
 
-	local dist = math.Round(-self.Owner:GetPos():Distance(self.Owner:GetEyeTraceNoCursor().HitPos) /12) +64
-	dist = math.Clamp(dist, 32, 128)
+	local dist = 32
 
 	local getcvar = GetConVarNumber("ss_crosshair")
 	if getcvar <= 0 or getcvar > 7 then return end
-	surface.SetTexture(surface.GetTextureID("vgui/serioussam/Crosshair"..getcvar))
-	surface.SetDrawColor(255, 255, 255, 255)
-	surface.DrawTexturedRect(x - dist /2 -1, y - dist /2 +1, dist, dist)
+	
+	local checker = string.Explode("_", self:GetClass())
+	
+	if checker[2] == "cs" then
+	
+		local length = 5
+	
+		if self.Owner:Crouching() == true and self.Owner:IsOnGround() == true then
+			crouchmul = 0.5
+		else
+			crouchmul = 1
+		end
+	
+	
+		local extra = (self:GetNWInt("weaponheat",0)*10 + (self.Primary.Cone*400) + self.Owner:GetVelocity():Length()*0.1)*crouchmul
+		--surface.DrawCircle( x, y, 10 + extra, Color(255,255,255,100) )
+		
+		surface.SetDrawColor( 0, 255, 0, 255 )
+		surface.DrawLine( x+10+extra+length, y, x+5+extra, y )
+		surface.DrawLine( x-10-extra-length, y, x-5-extra, y )
+		surface.DrawLine( x, y+10+extra+length, x, y+5+extra )
+		surface.DrawLine( x, y-10-extra-length, x, y-5-extra )
+		--print(self.Primary.Cone)
+		
+	else
+		surface.SetTexture(surface.GetTextureID("vgui/serioussam/Crosshair"..getcvar))
+		surface.SetDrawColor(255, 255, 255, 255)
+		surface.DrawTexturedRect(x - dist /2 -1, y - dist /2 +1, dist, dist)
+	end
+	
+	
+	
+	
 end

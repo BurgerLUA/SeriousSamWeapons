@@ -8,7 +8,7 @@ if CLIENT then
 		weight    = 700
 	})
 
-	SWEP.PrintName			= "CSS M4A1"
+	SWEP.PrintName			= "CSS AK47"
 	SWEP.Author				= "Upset"
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 1
@@ -80,7 +80,7 @@ SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= 90
 SWEP.Primary.Delay			= .14
-SWEP.Primary.Ammo			= "ar2"
+--SWEP.Primary.Ammo			= "ar2"
 SWEP.Primary.RecoilMul	= 1
 
 SWEP.ReloadSound			= ""

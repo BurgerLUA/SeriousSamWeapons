@@ -61,17 +61,17 @@ SWEP.Base				= "weapon_ss_base"
 SWEP.Category			= "Counter-Strike Source Weapons"
 SWEP.Spawnable			= true
 
-SWEP.ViewModel			= "models/weapons/v_smg_tmp.mdl"
-SWEP.WorldModel			= "models/weapons/w_smg_tmp.mdl"
+SWEP.ViewModel			= "models/weapons/v_smg_mp5.mdl"
+SWEP.WorldModel			= "models/weapons/w_smg_mp5.mdl"
 
 SWEP.Primary.Damage			= 25
-SWEP.Primary.Sound			= Sound("weapons/tmp/tmp-1.wav")
+SWEP.Primary.Sound			= Sound("weapons/mp5navy/mp5-1.wav")
 SWEP.Primary.Cone			= .01
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= 120
-SWEP.Primary.Delay			= .1
-SWEP.Primary.Ammo			= "smg1"
+SWEP.Primary.Delay			= .11
+--SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
 
 SWEP.ReloadSound			= ""

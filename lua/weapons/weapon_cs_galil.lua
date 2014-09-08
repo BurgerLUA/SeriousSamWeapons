@@ -74,7 +74,7 @@ SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 35
 SWEP.Primary.DefaultClip	= 90
 SWEP.Primary.Delay			= .125
-SWEP.Primary.Ammo			= "smg1"
+--SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
 
 SWEP.ReloadSound			= ""

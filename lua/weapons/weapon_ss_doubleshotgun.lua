@@ -33,7 +33,7 @@ SWEP.WorldModel			= "models/weapons/serioussam/w_doubleshotgun.mdl"
 
 
 SWEP.Primary.Sound			= Sound("weapons/serioussam/doubleshotgun/Fire.wav")
-SWEP.Primary.Damage			= 6
+SWEP.Primary.Damage			= 105/12
 SWEP.Primary.NumShots		= 24
 SWEP.Primary.Cone			= .16
 SWEP.Primary.Delay			= 1.35

@@ -13,17 +13,90 @@ end
 
 function SWEP:PrimaryAttack()
 	if !self:CanPrimaryAttack() then return end
+	
+	if self:GetNWBool("zoomed",false) == true then
+		self.cone = 0.001
+	else
+		self.cone = 0.1
+	end
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	self:Attack()
 	self:SeriousFlash()
 	self:IdleStuff()
 end
 
+function SWEP:SecondaryAttack()
+	self:EmitSound("weapons/zoom.wav",100,100)
+	if CLIENT then return end
+	
+	local delay = 0.3
+	
+	if not self.ScopeDelay then
+		self.ScopeDelay = 0
+	end
+	
+	if self.ScopeDelay > CurTime() then return end
+	
+	self.ScopeDelay = delay + CurTime()
+	
+	if not self.ScopeMode then
+		self.ScopeMode = 0
+	end
+	
+
+	
+	if self.ScopeMode == 1 then
+		self.ScopeMode = 0
+		self.Owner:SetFOV(75,delay)
+		self:SetNWBool("zoomed",false)
+	elseif self.ScopeMode == 0 then
+		self.ScopeMode = 1
+		self.Owner:SetFOV(10,delay)
+		self:SetNWBool("zoomed",true)
+	end
+end
+
+
+function SWEP:DrawHUD()
+	if self:GetNWBool("zoomed",false) == false then return end
+	local x,y = ScrW(), ScrH()
+	
+
+
+	surface.SetMaterial(Material("sprites/scope_arc"))
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.DrawTexturedRectRotated(ScrW()/2+ScrH()/4, ScrH()/2+ScrH()/4, ScrH()/2, ScrH()/2,0)
+	surface.DrawTexturedRectRotated(ScrW()/2-ScrH()/4, ScrH()/2-ScrH()/4, ScrH()/2, ScrH()/2,180)
+	surface.DrawTexturedRectRotated(ScrW()/2+ScrH()/4, ScrH()/2-ScrH()/4, ScrH()/2, ScrH()/2,90)
+	surface.DrawTexturedRectRotated(ScrW()/2-ScrH()/4, ScrH()/2+ScrH()/4, ScrH()/2, ScrH()/2,270)
+	
+	
+	surface.SetMaterial(Material("vgui/gfx/vgui/solid_background"))
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.DrawTexturedRect(0,0,ScrW()*0.11,ScrH())
+	
+	surface.SetMaterial(Material("vgui/gfx/vgui/solid_background"))
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.DrawTexturedRect(ScrW()*0.89,0,ScrW()*0.12,ScrH())
+
+end
+
+function SWEP:AdjustMouseSensitivity()
+	if self:GetNWBool("zoomed",false) == true then
+		sen = 0.1
+	else
+		sen = 1
+	end	
+	
+	return sen
+end
+	
+
 function SWEP:Attack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)	
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self:WeaponSound(self.Primary.Sound)
-	self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
+	self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.cone)
 	if !self.Owner:IsNPC() then self:TakePrimaryAmmo(1) end
 	self.NextReload = CurTime() +self.Primary.Delay + 0.1
 	self:HolsterDelay()
@@ -40,9 +113,12 @@ function SWEP:Reload()
 	if self:Clip1() >= self.Primary.ClipSize then return end
 	self.DisableHolster = CurTime() + 1
 	self:SendWeaponAnim(ACT_VM_RELOAD)
+	self:SetNWBool("zoomed",false)
 	self.Owner:SetAnimation(PLAYER_RELOAD)
 	self:SetClip1(self.Primary.ClipSize)
-	self:EmitSound(self.ReloadSound)
+	if SERVER then
+		self.Owner:SetFOV(75,0.3)
+	end
 	self:SetNextPrimaryFire(CurTime() + self.Owner:GetViewModel():SequenceDuration())
 	self:IdleStuff()
 end
@@ -66,12 +142,12 @@ SWEP.WorldModel			= "models/weapons/w_snip_scout.mdl"
 
 SWEP.Primary.Damage			= 74
 SWEP.Primary.Sound			= Sound("weapons/scout/scout_fire-1.wav")
-SWEP.Primary.Cone			= .01
+SWEP.Primary.Cone			= .1
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 10
 SWEP.Primary.DefaultClip	= 30
 SWEP.Primary.Delay			= 1.3
-SWEP.Primary.Ammo			= "smg1"
+--SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
 
 SWEP.ReloadSound			= ""

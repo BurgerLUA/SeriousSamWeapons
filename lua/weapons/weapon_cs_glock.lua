@@ -19,6 +19,26 @@ function SWEP:PrimaryAttack()
 	self:IdleStuff()
 end
 
+function SWEP:SecondaryAttack()
+	if !self:CanPrimaryAttack() then return end
+	if !self:CanSecondaryAttack() then return end
+	
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay*2)	
+	self:SetNextSecondaryFire(CurTime() + self.Primary.Delay*2)	
+	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+	
+	for i=1, 3 do 
+		timer.Simple(i*0.08 - 0.08, function()
+			if self.Weapon:Clip1() < 1 then return end
+			self:Attack()
+			self:SeriousFlash()
+			self:IdleStuff()
+		end)
+	end
+end
+
+	
+
 function SWEP:Attack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)	
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
@@ -71,7 +91,9 @@ SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 20
 SWEP.Primary.DefaultClip	= 60
 SWEP.Primary.Delay			= 0.24
-SWEP.Primary.Ammo			= "smg1"
+--SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
+
+
 
 SWEP.ReloadSound			= ""
