@@ -66,7 +66,7 @@ SWEP.WorldModel			= "models/weapons/w_smg_mp5.mdl"
 
 SWEP.Primary.Damage			= 25
 SWEP.Primary.Sound			= Sound("weapons/mp5navy/mp5-1.wav")
-SWEP.Primary.Cone			= .01
+SWEP.Primary.Cone			= .03
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= 120

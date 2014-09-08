@@ -48,8 +48,10 @@ function SWEP:Reload()
 	self.DisableHolster = CurTime() + 1
 	self.ReloadingTime = CurTime() + self.Primary.ClipSize-self:Clip1()
 	
+	self.ShellTime = 0.4
+	
 	for i=1, self.Primary.ClipSize-self:Clip1() do
-		timer.Simple(i*0.25 - 0.25,function()
+		timer.Simple(i*self.ShellTime - self.ShellTime,function()
 			self:SetClip1(self:Clip1()+1)
 			self:EmitSound(self.ReloadSound)
 			--self:SendWeaponAnim( ACT_SHOTGUN_RELOAD_START)
@@ -58,12 +60,12 @@ function SWEP:Reload()
 
 	end
 
-	timer.Simple((self.Primary.ClipSize-self:Clip1())*0.25, function() self:SendWeaponAnim( ACT_SHOTGUN_RELOAD_FINISH ) end)
+	timer.Simple((self.Primary.ClipSize-self:Clip1())*self.ShellTime, function() self:SendWeaponAnim( ACT_SHOTGUN_RELOAD_FINISH ) end)
 	
 	self.Owner:SetAnimation(PLAYER_RELOAD)
 	
 	
-	self:SetNextPrimaryFire(CurTime() + 0.25*(self.Primary.ClipSize-self:Clip1()))
+	self:SetNextPrimaryFire(CurTime() + self.ShellTime*(self.Primary.ClipSize-self:Clip1()))
 	self:IdleStuff()
 end
 
@@ -86,12 +88,13 @@ SWEP.WorldModel			= "models/weapons/w_shot_m3super90.mdl"
 
 SWEP.Primary.Damage			= 114/12
 SWEP.Primary.Sound			= Sound("weapons/m3/m3-1.wav")
-SWEP.Primary.Cone			= .2
+SWEP.Primary.Cone			= .15
 SWEP.Primary.NumShots		= 12
 SWEP.Primary.ClipSize		= 8
 SWEP.Primary.DefaultClip	= 8
 SWEP.Primary.Delay			= 1
 --SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
+SWEP.Primary.Automatic = false
 
 SWEP.ReloadSound			= ""

@@ -12,35 +12,49 @@ if CLIENT then
 end
 
 function SWEP:PrimaryAttack()
+
 	if !self:CanPrimaryAttack() then return end
-	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-	self:Attack()
-	self:SeriousFlash()
-	self:IdleStuff()
+	
+	if self.FireMode == 1 then
+		self.Primary.RecoilMul	= 1
+		self.Primary.Cone = .02
+		self:Attack()
+		self:IdleStuff()
+		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)	
+	elseif self.FireDelay < CurTime() then
+		self.Primary.Cone = .01
+		self.Primary.RecoilMul	= 0.5
+		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay*2)
+		self:Attack()
+		timer.Simple(self.Primary.Delay*0.5, function()
+			if (!IsValid(self) or !IsValid(self.Owner) or !self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() != self) then return end
+			self:Attack()
+		end)
+		timer.Simple(self.Primary.Delay*1, function()
+			if (!IsValid(self) or !IsValid(self.Owner) or !self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() != self) then return end
+			self:Attack()
+		end)
+		self.FireDelay = CurTime() + self.Primary.Delay*4
+	end
+		
 end
 
 function SWEP:SecondaryAttack()
-	if !self:CanPrimaryAttack() then return end
-	if !self:CanSecondaryAttack() then return end
-	
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay*2)	
-	self:SetNextSecondaryFire(CurTime() + self.Primary.Delay*2)	
-	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-	
-	for i=1, 3 do 
-		timer.Simple(i*0.08 - 0.08, function()
-			if self.Weapon:Clip1() < 1 then return end
-			self:Attack()
-			self:SeriousFlash()
-			self:IdleStuff()
-		end)
+	self:EmitSound("weapons/elite/elite_sliderelease.wav")
+	if self.FireMode == 1 then
+		self.Owner:PrintMessage( HUD_PRINTCENTER, "Switched to Burst Fire Mode" )
+		self.FireMode = 2
+	else
+		self.FireMode = 1
+		self.Owner:PrintMessage( HUD_PRINTCENTER, "Switched to Semi-Automatic" )
 	end
 end
 
-	
 
 function SWEP:Attack()
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)	
+	if !self:CanPrimaryAttack() then return end
+	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+	self:SeriousFlash()
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self:WeaponSound(self.Primary.Sound)
 	self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
@@ -86,14 +100,18 @@ SWEP.WorldModel			= "models/weapons/w_pist_glock18.mdl"
 
 SWEP.Primary.Damage			= 25
 SWEP.Primary.Sound			= Sound("weapons/glock/glock18-1.wav")
+SWEP.Primary.Automatic = false
 SWEP.Primary.Cone			= .01
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 20
 SWEP.Primary.DefaultClip	= 60
-SWEP.Primary.Delay			= 0.24
+SWEP.Primary.Delay			= 0.05
 --SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
 
 
 
 SWEP.ReloadSound			= ""
+
+SWEP.Firemode = 1
+SWEP.FireDelay = 0

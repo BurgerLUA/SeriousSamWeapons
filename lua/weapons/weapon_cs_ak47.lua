@@ -75,12 +75,13 @@ SWEP.WorldModel			= "models/weapons/w_rif_ak47.mdl"
 
 SWEP.Primary.Damage			= 35
 SWEP.Primary.Sound			= Sound("weapons/ak47/ak47-1.wav")
-SWEP.Primary.Cone			= .01
+SWEP.Primary.Cone			= .02
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= 90
 SWEP.Primary.Delay			= .14
 --SWEP.Primary.Ammo			= "ar2"
 SWEP.Primary.RecoilMul	= 1
+SWEP.Primary.Automatic = false
 
 SWEP.ReloadSound			= ""

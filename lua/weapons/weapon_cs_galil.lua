@@ -69,7 +69,7 @@ SWEP.WorldModel			= "models/weapons/w_rif_galil.mdl"
 
 SWEP.Primary.Damage			= 29
 SWEP.Primary.Sound			= Sound("weapons/galil/galil-1.wav")
-SWEP.Primary.Cone			= .01
+SWEP.Primary.Cone			= .02
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 35
 SWEP.Primary.DefaultClip	= 90

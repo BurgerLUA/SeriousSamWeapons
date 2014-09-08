@@ -76,6 +76,9 @@ SWEP.LaserPos				= false
 
 SWEP.SBobScale				= 1
 
+SWEP.CoolDown = 0
+
+
 function SWEP:Initialize()
 	self:SetWeaponHoldType(self.HoldType)
 	self:SetDeploySpeed(self.DeployDelay)
@@ -105,7 +108,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:WeaponSound(snd)
-	if SERVER then self.Owner:EmitSound(snd, 50, 100) end
+	if SERVER then self.Owner:EmitSound(snd, 100, 100) end
 end
 
 function SWEP:HolsterDelay()
@@ -147,8 +150,9 @@ function SWEP:Think()
 	end
 	
 	
-	
-	self:SetNWInt("weaponheat", math.Clamp(self.CoolDown,0,10))
+	if SERVER then
+		self:SetNWInt("weaponheat", math.Clamp(self.CoolDown,0,10))
+	end
 		
 	
 	
@@ -192,7 +196,7 @@ function SWEP:ShootBullet(dmg, numbul, cone)
 			crouchmul = 1
 		end
 		
-		
+		--print(self.CoolDown)
 		self.extraspread = (self.CoolDown/100 + self.Owner:GetVelocity():Length()*0.0001)*crouchmul
 	else
 		self.extraspread = 0
@@ -200,21 +204,16 @@ function SWEP:ShootBullet(dmg, numbul, cone)
 
 	local Kick = -(dmg*numbul/20)/2*self.Primary.RecoilMul
 
-	if CLIENT or game.SinglePlayer() then
-		timer.Simple(0.00,function()
-			if (!IsValid(self) or !IsValid(self.Owner) or !self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() != self) then return end
-			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand(-1,1)*0.5,0)*1 )
-		end)
-	end
+
 	
-	self.Owner:ViewPunch(Angle(Kick*0.25,Kick*math.Rand(-1,1)*0.25,0))
+	self.Owner:ViewPunch(Angle(Kick*3,Kick*math.Rand(-1,1)*1,0))
 	
-	
-	
+	local angle = (self.Owner:GetPunchAngle() + self.Owner:EyeAngles()):Forward()
+	--print(angle)
 	local bullet = {}
 	bullet.Num 		= numbul
 	bullet.Src 		= self.Owner:GetShootPos() 
-	bullet.Dir 		= self.Owner:GetAimVector()
+	bullet.Dir 		= angle
 	bullet.Spread 	= Vector(cone, cone, 0) + Vector(self.extraspread,self.extraspread,0)
 	bullet.Tracer	= 3
 	bullet.Force	= dmg/10
@@ -222,6 +221,12 @@ function SWEP:ShootBullet(dmg, numbul, cone)
 	self.Owner:FireBullets(bullet)
 
 	
+	
+	if CLIENT or game.SinglePlayer() then
+		if self.Owner:GetPunchAngle().x != 0 then
+			self.Owner:SetEyeAngles( self.Owner:EyeAngles() + Angle(Kick,Kick*math.Rand(-1,1)*0.5,0)*1 )
+		end
+	end
 	
 
 	
@@ -458,11 +463,18 @@ function SWEP:Crosshair()
 			crouchmul = 1
 		end
 	
-	
-		local extra = (self:GetNWInt("weaponheat",0)*10 + (self.Primary.Cone*400) + self.Owner:GetVelocity():Length()*0.1)*crouchmul
+		if game.SinglePlayer() then
+			heat = math.Clamp(self.CoolDown,0,10)
+		else
+			heat = self:GetNWInt("weaponheat",0)
+		end
+		
+		--print(heat)
+		
+		local extra = (heat*10 + (self.Primary.Cone*400) + self.Owner:GetVelocity():Length()*0.1)*crouchmul
 		--surface.DrawCircle( x, y, 10 + extra, Color(255,255,255,100) )
 		
-		surface.SetDrawColor( 0, 255, 0, 255 )
+		surface.SetDrawColor( 50, 255, 50, 200 )
 		surface.DrawLine( x+10+extra+length, y, x+5+extra, y )
 		surface.DrawLine( x-10-extra-length, y, x-5-extra, y )
 		surface.DrawLine( x, y+10+extra+length, x, y+5+extra )

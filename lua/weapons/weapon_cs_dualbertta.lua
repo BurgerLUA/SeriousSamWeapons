@@ -13,7 +13,19 @@ end
 
 function SWEP:PrimaryAttack()
 	if !self:CanPrimaryAttack() then return end
-	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+	
+	self.Owner:GetViewModel():SetPlaybackRate(0.1)
+	
+	if num == 1 then
+		self.Owner:GetViewModel():ResetSequence( self.Owner:GetViewModel():LookupSequence( "shoot_right1" ) )
+		num=2
+	else
+		
+		self.Owner:GetViewModel():ResetSequence( self.Owner:GetViewModel():LookupSequence( "shoot_left1" ) )  
+		num =1
+	end
+	
+	
 	self:Attack()
 	self:SeriousFlash()
 	self:IdleStuff()
@@ -39,6 +51,7 @@ function SWEP:Reload()
 	if self:Clip1() > 0 and self.NextReload then return end
 	if self:Clip1() >= self.Primary.ClipSize then return end
 	self.DisableHolster = CurTime() + 1
+	self.Owner:GetViewModel():SetPlaybackRate(1)
 	self:SendWeaponAnim(ACT_VM_RELOAD)
 	self.Owner:SetAnimation(PLAYER_RELOAD)
 	self:SetClip1(self.Primary.ClipSize)
@@ -61,17 +74,19 @@ SWEP.Base				= "weapon_ss_base"
 SWEP.Category			= "Counter-Strike Source Weapons"
 SWEP.Spawnable			= true
 
-SWEP.ViewModel			= "models/weapons/v_mach_m249para.mdl"
-SWEP.WorldModel			= "models/weapons/w_mach_m249para.mdl"
+SWEP.ViewModel			= "models/weapons/v_pist_elite.mdl"
+SWEP.WorldModel			= "models/weapons/v_pist_elite.mdl"
 
-SWEP.Primary.Damage			= 31
-SWEP.Primary.Sound			= Sound("weapons/m249/m249-1.wav")
-SWEP.Primary.Cone			= .01
+SWEP.Primary.Damage			= 44
+SWEP.Primary.Sound			= Sound("weapons/elite/elite-1.wav")
+SWEP.Primary.Cone			= .03
 SWEP.Primary.NumShots		= 1
-SWEP.Primary.ClipSize		= 100
-SWEP.Primary.DefaultClip	= 200
-SWEP.Primary.Delay			= .1
+SWEP.Primary.ClipSize		= 30
+SWEP.Primary.DefaultClip	= 30
+SWEP.Primary.Delay			= .005
 --SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
+SWEP.Primary.Automatic = false
 
 SWEP.ReloadSound			= ""
+SWEP.num = 1

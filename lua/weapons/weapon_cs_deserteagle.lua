@@ -68,12 +68,13 @@ SWEP.WorldModel			= "models/weapons/w_pist_deagle.mdl"
 
 SWEP.Primary.Damage			= 52
 SWEP.Primary.Sound			= Sound("weapons/deagle/deagle-1.wav")
-SWEP.Primary.Cone			= .01
+SWEP.Primary.Cone			= .02
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 8
 SWEP.Primary.DefaultClip	= 16
-SWEP.Primary.Delay			= 0.45
+SWEP.Primary.Delay			= 0.1
 --SWEP.Primary.Ammo			= "smg1"
 SWEP.Primary.RecoilMul	= 1
+SWEP.Primary.Automatic = false
 
 SWEP.ReloadSound			= ""

@@ -15,9 +15,11 @@ function SWEP:PrimaryAttack()
 	if !self:CanPrimaryAttack() then return end
 	
 	if self:GetNWBool("zoomed",false) == true then
-		self.cone = 0.001
+		self.Primary.Cone = 0.001
+		self.Primary.RecoilMul	= 0.25
 	else
-		self.cone = 0.1
+		self.Primary.Cone = 0.1
+		self.Primary.RecoilMul	= 1
 	end
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	self:Attack()
@@ -96,7 +98,7 @@ function SWEP:Attack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)	
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self:WeaponSound(self.Primary.Sound)
-	self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.cone)
+	self:ShootBullet(self.Primary.Damage, self.Primary.NumShots, self.Primary.Cone)
 	if !self.Owner:IsNPC() then self:TakePrimaryAmmo(1) end
 	self.NextReload = CurTime() +self.Primary.Delay + 0.1
 	self:HolsterDelay()

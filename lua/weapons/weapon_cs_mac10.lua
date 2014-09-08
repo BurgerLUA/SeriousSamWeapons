@@ -66,7 +66,7 @@ SWEP.WorldModel			= "models/weapons/w_smg_mac10.mdl"
 
 SWEP.Primary.Damage			= 28
 SWEP.Primary.Sound			= Sound("weapons/mac10/mac10-1.wav")
-SWEP.Primary.Cone			= .02
+SWEP.Primary.Cone			= .03
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= 120

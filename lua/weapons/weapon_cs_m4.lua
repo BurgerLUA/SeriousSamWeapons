@@ -66,7 +66,7 @@ SWEP.WorldModel			= "models/weapons/w_rif_m4a1.mdl"
 
 SWEP.Primary.Damage			= 32
 SWEP.Primary.Sound			= Sound("weapons/m4a1/m4a1_unsil-1.wav")
-SWEP.Primary.Cone			= .01
+SWEP.Primary.Cone			= .02
 SWEP.Primary.NumShots		= 1
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= 90
