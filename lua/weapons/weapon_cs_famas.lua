@@ -22,11 +22,10 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	if !self:CanPrimaryAttack() then return end
+	--[[if !self:CanPrimaryAttack() then return end
 	if !self:CanSecondaryAttack() then return end
 	
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay*2)	
-	self:SetNextSecondaryFire(CurTime() + self.Primary.Delay*2)	
+
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	
 	
@@ -34,13 +33,17 @@ function SWEP:SecondaryAttack()
 	for i=1, 3 do 
 		timer.Simple(i*0.08 - 0.08, function()
 			if self.Weapon:Clip1() < 1 then return end
+			if !self:CanPrimaryAttack() then return end
+			if !self:CanSecondaryAttack() then return end
 			self:Attack()
 			self:SeriousFlash()
 			self:IdleStuff()
+			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay*2)	
+			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay*2)	
 		end)
 	end
 	
-	
+	--]]
 end
 
 
