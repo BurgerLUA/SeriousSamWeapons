@@ -82,6 +82,6 @@ SWEP.Primary.DefaultClip	= 90
 SWEP.Primary.Delay			= .14
 --SWEP.Primary.Ammo			= "ar2"
 SWEP.Primary.RecoilMul	= 1
-SWEP.Primary.Automatic = false
+SWEP.Primary.Automatic = true
 
 SWEP.ReloadSound			= ""
