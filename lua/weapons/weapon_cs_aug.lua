@@ -14,8 +14,8 @@ function SWEP:PrimaryAttack()
 	if !self:CanPrimaryAttack() then return end
 	
 	if self:GetNWBool("zoomed",false) == true then
-		self.Primary.Cone			= 0.001
-		self.Primary.RecoilMul	= 0.25
+		self.Primary.Cone			= 0.01
+		self.Primary.RecoilMul	= 0.40
 	else
 		self.Primary.Cone			= .1
 		self.Primary.RecoilMul	= 1
