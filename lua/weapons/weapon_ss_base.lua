@@ -436,6 +436,7 @@ function SWEP:DrawHUD()
 end
 
 function SWEP:Crosshair()
+
 	local x, y		
 	if (self.Owner == LocalPlayer() && self.Owner:ShouldDrawLocalPlayer()) then
 		local tr = util.GetPlayerTrace(self.Owner)
@@ -455,7 +456,7 @@ function SWEP:Crosshair()
 	
 	if checker[2] == "cs" then
 	
-		local length = 5
+		local length = 10
 	
 		if self.Owner:Crouching() == true and self.Owner:IsOnGround() == true then
 			crouchmul = 0.5
@@ -475,10 +476,10 @@ function SWEP:Crosshair()
 		--surface.DrawCircle( x, y, 10 + extra, Color(255,255,255,100) )
 		
 		surface.SetDrawColor( 50, 255, 50, 200 )
-		surface.DrawLine( x+10+extra+length, y, x+5+extra, y )
-		surface.DrawLine( x-10-extra-length, y, x-5-extra, y )
-		surface.DrawLine( x, y+10+extra+length, x, y+5+extra )
-		surface.DrawLine( x, y-10-extra-length, x, y-5-extra )
+		surface.DrawLine( x+1+extra+length, y, x+.5+extra, y )
+		surface.DrawLine( x-1-extra-length, y, x-.5-extra, y )
+		surface.DrawLine( x, y+1+extra+length, x, y+.5+extra )
+		surface.DrawLine( x, y-1-extra-length, x, y-.5-extra )
 		--print(self.Primary.Cone)
 		
 	else
